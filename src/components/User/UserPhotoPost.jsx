@@ -22,7 +22,7 @@ import Head from "../Helper/Head";
 import { useDispatch, useSelector } from "react-redux";
 
 // Importa o slice photoPost.
-import photoPost from "../../store/photoPost";
+import { photoPost } from "../../store/photoPost";
 
 // Criado um componente chamado UserPhotoPost.
 const UserPhotoPost = () => {
