@@ -12,9 +12,9 @@ import { useSelector } from "react-redux";
 
 // Cria um componente chamado PhotoComments que recebe como parâmetro as propriedades comments e id.
 const PhotoComments = (props) => {
-  const [comments, setComments] = React.useState(() => props.comments); // Cria um estado para armazenar os comentários e a função para atualizar o estado chamado setComments. O estado inicial é o valor das propriedades comments.
-
   const commentsSection = React.useRef(null); // Cria uma referência para o elemento commentsSection. O valor inicial é null.
+
+  const [comments, setComments] = React.useState(() => props.comments); // Cria um estado para armazenar os comentários e a função para atualizar o estado chamado setComments. O estado inicial é o valor das propriedades comments.
 
   const { data } = useSelector((state) => state.user); // Está desestruturando o state.user para pegar a propriedade data. O useSelector é responsável por acessar o estado global da aplicação.
 
@@ -35,8 +35,8 @@ const PhotoComments = (props) => {
         // Se o single for verdadeiro, ou seja se for uma foto única, então renderiza a classe single, se não renderiza uma string vazia, ou seja, não renderiza nada.
         className={`${styles.comments} ${props.single ? styles.single : ""}`}
       >
-        {comments.map((comment) => (
-          <li key={comment.comment_ID}>
+        {comments.map((comment, index) => (
+          <li key={index}>
             <b>{comment.comment_author}: </b>
             <span>{comment.comment_content}</span>
           </li>
@@ -47,6 +47,7 @@ const PhotoComments = (props) => {
       {data && (
         <PhotoCommentsForm
           id={props.id}
+          comments={comments}
           setComments={setComments}
           single={props.single}
         />

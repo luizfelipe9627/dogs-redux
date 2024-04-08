@@ -19,13 +19,18 @@ import { useSelector } from "react-redux";
 
 // Cria um componente chamado PhotoContent que recebe a propriedade data e single.
 const PhotoContent = ({ single }) => {
+  const photoContentRef = React.useRef(null); // Cria uma referência para o elemento photoContentRef. O valor inicial é null.
+
   const { photo, comments } = useSelector((state) => state.photo.data); // Está desestruturando o state.photo para pegar a propriedade data, loading e error. O useSelector é responsável por acessar o estado global da aplicação.
 
   const { data } = useSelector((state) => state.user); // Está desestruturando o state.user para pegar a propriedade data. O useSelector é responsável por acessar o estado global da aplicação.
 
   return (
     // Se o single for verdadeiro, ou seja se for uma foto única, então renderiza a classe single, se não renderiza uma string vazia, ou seja, não renderiza nada.
-    <div className={`${styles.photo} ${single ? styles.single : ""}`}>
+    <div
+      className={`${styles.photo} ${single ? styles.single : ""}`}
+      ref={photoContentRef}
+    >
       <div className={styles.img}>
         {/* Renderiza o componente Image passando as propriedades src e alt. */}
         <Image src={photo.src} alt={photo.title} />

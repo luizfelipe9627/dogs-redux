@@ -15,11 +15,10 @@ import styles from "./FeedModal.module.css";
 import { useDispatch, useSelector } from "react-redux";
 
 // Importa a action fetchPhoto.
-import { fetchPhoto } from "../../store/photo";
 import { closeModal } from "../../store/ui";
 
 // Cria um componente chamado FeedModal que recebe a propriedade photo.
-const FeedModal = ({ photo }) => {
+const FeedModal = () => {
   const { data, loading, error } = useSelector((state) => state.photo); // Está desestruturando o state.photo para pegar a propriedade data, loading e error. O useSelector é responsável por acessar o estado global da aplicação.
 
   const { modal } = useSelector((state) => state.ui); // Está desestruturando o state.ui para pegar a propriedade modal. O useSelector é responsável por acessar o estado global da aplicação.

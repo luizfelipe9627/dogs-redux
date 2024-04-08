@@ -20,7 +20,7 @@ const createAsyncSlice = (config) => {
       data: null, // Define o estado inicial da store como null.
       loading: false, // Define o estado inicial da store como false.
       error: null, // Define o estado inicial da store como null.
-      
+
       ...config.initialState, // Está desestruturando o initialState do config, caso seja passado um novo initialState, ele será mesclado com o initialState padrão.
     },
     // O reducer do slice.
@@ -41,7 +41,7 @@ const createAsyncSlice = (config) => {
       fetchError(state, action) {
         state.loading = false; // Define o estado de loading como false.
         state.data = null; // Define o estado de data como null.
-        state.error = null; // Define o estado de error como null.
+        state.error = action.payload; // Define o estado de error com o que foi retornado pela payload.
       },
 
       // Criado a ação resetState que recebe o estado como parâmetro, responsável por resetar o estado.

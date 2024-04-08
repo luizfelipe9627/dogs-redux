@@ -7,10 +7,6 @@ import Button from "../Forms/Button";
 
 // Importa o hook.
 import useForm from "../../hooks/useForm";
-import useFetch from "../../hooks/useFetch";
-
-// Importa a API.
-import { USER_POST } from "../../Api";
 
 // Importa o helper.
 import Error from "../Helper/Error";
@@ -18,7 +14,10 @@ import Head from "../Helper/Head";
 
 // Importa o hook useSelector e useDispatch do React Redux.
 import { useSelector, useDispatch } from "react-redux";
+
+// Importa as actions.
 import { userLogin } from "../../store/user";
+import { fetchLoginCreate } from "../../store/loginCreate";
 
 // Criado um componente chamado LoginCreate.
 const LoginCreate = () => {
@@ -27,32 +26,34 @@ const LoginCreate = () => {
   const email = useForm("email");
   const password = useForm("password");
 
-  const { loading, error, request } = useFetch(); // Desestrutura o retorno da função useFetch e armazena a resposta da API nas constantes loading, error e request.
-
   const dispatch = useDispatch(); // O dispatch é uma função responsável por disparar uma action para o reducer.
+
+  const { data, loading, error } = useSelector((state) => state.loginCreate); // Está desestruturando o state.loginCreate para pegar a propriedade data, loading e error. O useSelector é responsável por acessar o estado global da aplicação.
 
   // Criado uma função chamada handleSubmit responsável por fazer o envio dos dados do formulário para a API. O async faz com que a função espere a resposta da API para continuar o código.
   async function handleSubmit(event) {
     event.preventDefault(); // Impede que o formulário seja enviado e a página seja recarregada.
 
-    // Desestrutura o retorno da função USER_POST e armazena a url e as options nas constantes url e options. Passa um objeto com os valores dos campos do formulário como parâmetro da função USER_POST.
-    const { url, options } = USER_POST({
-      // Passa os dados do que foi digitado no Form para criar o usuário na API.
-      username: username.value,
-      email: email.value,
-      password: password.value,
-    });
+    // Dispara a função loginCreate que é responsável por criar o usuário e passando como parâmetro um objeto que é o payload da action, definindo o username, email e password.
+    dispatch(
+      fetchLoginCreate({
+        username,
+        email,
+        password,
+      }),
+    );
+  }
 
-    const { response } = await request(url, options); // Desestrutura o response da API e armazena a resposta da API na constante response. A constante request recebe a url e as options como parâmetro.
-
-    // Se a resposta da API for ok, ou seja, se o usuário for criado com sucesso, executa o if e faz o login do usuário.
-    if (response.ok) {
+  // O useEffect é um hook do React que serve para executar efeitos colaterais em componentes funcionais, ele irá executar a função passada como primeiro parâmetro toda vez que a data, dispatch, username ou password mudar.
+  React.useEffect(() => {
+    // Se o estado data for verdadeiro, ou seja, se o usuário for criado com sucesso, executa o if e redireciona o usuário para a rota de minha conta.
+    if (data) {
       // Dispacha a função userLogin que é responsável por fazer o login do usuário e passando como parâmetros um objeto que é o payload da action, definindo o username e o password.
       dispatch(
         userLogin({ username: username.value, password: password.value }),
       );
     }
-  }
+  }, [data, dispatch, username, password]);
 
   return (
     <section className="animeLeft">

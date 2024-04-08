@@ -7,7 +7,6 @@ import Button from "../Forms/Button";
 
 // Importa o hook.
 import useForm from "../../hooks/useForm";
-import useFetch from "../../hooks/useFetch";
 
 // Importa a API.
 import { PASSWORD_RESET } from "../../Api";
@@ -19,6 +18,12 @@ import { useNavigate } from "react-router-dom";
 import Error from "../Helper/Error";
 import Head from "../Helper/Head";
 
+// Importa a action.
+import { fetchLoginPasswordReset } from "../../store/loginPasswordReset";
+
+// Importa o useDispatch e useSelector do react-redux.
+import { useSelector, useDispatch } from "react-redux";
+
 // Criado um componente chamado LoginPasswordReset.
 const LoginPasswordReset = () => {
   const [login, setLogin] = React.useState(""); // Cria um estado chamado login e uma função chamada setLogin que atualiza o estado login. O valor inicial do estado login é uma string vazia.
@@ -26,10 +31,14 @@ const LoginPasswordReset = () => {
 
   const navigate = useNavigate(); // Armazena na variável navigate todas as funções de navegação, sendo elas: navigate, goBack, goForward e canGo.
 
+  const dispatch = useDispatch(); // O dispatch é uma função responsável por disparar uma action para o reducer.
+
   // Armazena todos os dados(estados, funções etc) do hook useForm na variável password.
   const password = useForm("password");
 
-  const { loading, error, request } = useFetch(); // Desestrutura o retorno da função useFetch e armazena a resposta da API nas constantes data, loading, error e request.
+  const { data, loading, error } = useSelector(
+    (state) => state.loginPasswordReset,
+  ); // Está desestruturando o state.user para pegar a propriedade data e loading. O useSelector é responsável por acessar o estado global da aplicação.
 
   // O useEffect é executado sempre que a página é carregada/recarregada, pois a array de dependências está vazia.
   React.useEffect(() => {
@@ -53,22 +62,17 @@ const LoginPasswordReset = () => {
 
     // Se o password for válido, ou seja, se o password não estiver vazio, então executa o if.
     if (password.validate()) {
-      // Desestrutura o retorno da função PASSWORD_LOST e armazena a url e options nas constantes url e options. A função PHOTOS_GET recebe o id da foto como parâmetro.
-      const { url, options } = PASSWORD_RESET({
-        login, // Está armazenando o valor do estado login na propriedade login.
-        key, // Está armazenando o valor do estado key na propriedade key.
-        password: password.value, // Está armazenando o valor do input password na propriedade password.
-      });
-
-      // O await faz com que a função espere a resposta da API para continuar o código.
-      const { response, json } = await request(url, options); // Desestrutura o retorno da função request armazenando a response que armazena o resultado do fetch e o json que armazena a resposta convertida em json nas constantes response e json. A função request recebe a url que é a url da API e options que são as opções da requisição.
-      console.log(json);
-      // Se a response for verdadeira, ou seja, se a response for 200, então executa o if.
-      if (response.ok) {
-        navigate("/login"); // Redireciona o usuário para a página de login.
-      }
+      dispatch(fetchLoginPasswordReset({ login, key, password })); // Dispara a action fetchLoginPasswordReset que é responsável por fazer o reset da senha. A action recebe um objeto contendo login, key e password como parâmetro.
     }
   }
+
+  // O useEffect é executado sempre que a variável data ou o navigate mudar.
+  React.useEffect(() => {
+    // Se data for verdadeiro, ou seja, se existir algum dado, então executa o if.
+    if (data) {
+      navigate("/login"); // Navega para a página de login.
+    }
+  }, [data, navigate]);
 
   return (
     <section className="animeLeft">

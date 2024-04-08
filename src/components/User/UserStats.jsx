@@ -6,28 +6,29 @@ import Head from "../Helper/Head";
 import Loading from "../Helper/Loading";
 import Error from "../Helper/Error";
 
-// Importa o hook.
-import useFetch from "../../hooks/useFetch";
+// Importa o hook useSelector e useDispatch do React Redux.
+import { useSelector, useDispatch } from "react-redux";
 
-// Importa a API.
-import { STATS_GET } from "../../Api";
+// Importa a action.
+import { fetchUserStats } from "../../store/userStats";
 
 // Armazena o componente UserStatsGraphs em uma variável e usa o React.lazy para carregar o componente apenas quando ele for usado.
 const UserStatsGraphs = React.lazy(() => import("./UserStatsGraphs"));
 
 // Criado um componente chamado UserStats.
 const UserStats = () => {
-  const { data, loading, error, request } = useFetch(); // Desestrutura o retorno da função useFetch e armazena a resposta da API nas constantes data, loading, error e request.
+  const dispatch = useDispatch(); // O dispatch é uma função responsável por disparar uma action para o reducer.
+
+  const { data, loading, error } = useSelector((state) => state.userStats); // Está desestruturando o state.userStats para pegar a propriedade data, loading e error. O useSelector é responsável por acessar o estado global da aplicação.
 
   // O React.useEffect é executado sempre que o componente for renderizado ou quando uma variável passada no array de dependências for alterada.
   React.useEffect(() => {
     // O async/await é usado para que a função getData espere a resposta da API para depois executar o resto do código.
     async function getData() {
-      const { url, options } = STATS_GET(); // Desestrutura o retorno da função STATS_GET, sendo que a constante url recebe a url da API e a constante options recebe as opções da requisição.
-      const { response, json } = await request(url, options); // Desestrutura o retorno da função request e armazena a resposta nas constantes response e json.
+      dispatch(fetchUserStats()); // Dispara a action fetchUserStats que é responsável por fazer a requisição à API e retornar as estatísticas do usuário.
     }
     getData(); // Chama a função getData.
-  }, [request]);
+  }, [dispatch]);
 
   // Se loading for true, retorna o componente Loading.
   if (loading) return <Loading />;

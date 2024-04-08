@@ -8,8 +8,28 @@ import token from "./token";
 import user from "./user";
 import feed from "./feed";
 import ui from "./ui";
+import loginPasswordLost from "./loginPasswordLost";
+import userStats from "./userStats";
+import photoDelete from "./photoDelete";
+import photoComments from "./photoComments";
+import loginCreate from "./loginCreate";
+import loginPasswordReset from "./loginPasswordReset";
 
-const reducer = combineReducers({ photo, photoPost, token, user, feed, ui }); // O combineReducers é responsável por combinar os reducers e armazenar em uma constante chamada reducer.
+// O combineReducers é responsável por combinar os reducers e armazenar em uma constante chamada reducer.
+const reducer = combineReducers({
+  feed,
+  photo,
+  photoPost,
+  photoDelete,
+  photoComments,
+  user,
+  userStats,
+  loginCreate,
+  loginPasswordLost,
+  loginPasswordReset,
+  token,
+  ui,
+});
 
 const middleware = (getDefaultMiddleware) => getDefaultMiddleware(); // A constante middleware recebe uma função que recebe como parâmetro o getDefaultMiddleware que é responsável por retornar os middlewares padrões do redux-toolkit, e junta(por isso o concat) com o middleware personalizado.
 
