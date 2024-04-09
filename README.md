@@ -1,24 +1,25 @@
-# Dogs
+# Dogs Redux
 ![Badge](http://img.shields.io/static/v1?label=STATUS&message=CONCLUIDO&color=GREEN&style=for-the-badge)   
 
-<img src="https://github.com/luizfelipe9627/dogs/blob/main/src/assets/img/dogs.gif" alt="Apresentação do Dogs">
+<img src="https://github.com/luizfelipe9627/dogs/blob/main/src/assets/img/dogs.gif" alt="Apresentação do Dogs Redux">
 
 ## 📄 Descrição
-Dogs é uma rede social focada em cachorros.
+Dogs Redux é a versão Redux do projeto Dogs, uma rede social focada em cachorros.
 
 ### <a href="https://luizfelipe9627-dogs.netlify.app">Acesse o projeto</a>
 
 ## 📑 Observação
-Esse projeto foi o último do curso de React Completo, criei junto com o André da Origamid para colocar em prática tudo aprendido ao decorrer do curso.
+O projeto Dogs Redux foi desenvolvido no final do curso de Redux com React da Origamid, com o intuito de aprender a utilizar o Redux tanto puramente quanto com o Redux Toolkit em aplicações React de forma prática, refatorando um projeto já existente.
 
-### <a href="https://www.origamid.com/curso/react-completo">Acesse o curso</a>
+### <a href="https://www.origamid.com/curso/redux-com-react">Acesse o curso</a>
 
 ## 💻 Tecnologias utilizadas
 
 - ``HTML5``
 - ``CSS3``
-- ``JAVASCRIPT``
 - ``REACT.JS``
+- ``REDUX``
+- ``REDUX TOOLKIT``
 - ``VITE.JS``
 - ``ESLINT``
 
