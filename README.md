@@ -15,9 +15,8 @@ O projeto Dogs Redux foi desenvolvido no final do curso de Redux com React da Or
 
 ## 💻 Tecnologias utilizadas
 
-- ``HTML5``
-- ``CSS3``
 - ``REACT.JS``
+- ``CSS3``
 - ``REDUX``
 - ``REDUX TOOLKIT``
 - ``VITE.JS``
